@@ -1,0 +1,3 @@
+{
+  "ignore": ["*dunyanews.json", "*aryNews.json", "*GeoNews.json", "*dawnNews.json", "*dailyPakistan.json"]
+}

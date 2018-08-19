@@ -1,0 +1,9 @@
+<h2>Pakistan News Api</h2>
+
+<p>We updated this every 20 minites</p>
+
+{% if time == 0 %}
+    <p>Last updated few seconds ago...</p>
+{% else %}
+    <p>Last updated {{time}} minutes ago...</p>
+{% endif %}
