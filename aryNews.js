@@ -41,7 +41,7 @@ let FetchAryNewsPakistan = async function (url) {
       let title = pakistanData(el).find('h2').text().replace(/\n/g, '');
       let description = pakistanData(el).find('.post-summary').text().replace(/\n/g, '');
       let link = pakistanData(el).find('a').attr('href');
-      let image = pakistanData(el).find('a').attr('data-src');
+      let image = pakistanData(el).find('a').attr('data-src').replace(/210x136/g, '750x369');
       let topStories = {
         title: title,
         description: description,
