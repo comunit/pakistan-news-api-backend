@@ -7,11 +7,13 @@ const FetchAryNews = require('./aryNews');
 const FetchGeoNews = require('./geoNews');
 const FetchDawnNews = require('./dawnNews');
 const FetchDailyPakistan = require('./dailyPakistan');
+const FetchExpressTribune = require('./expressTribune');
 const dunyaNews = 'http://dunyanews.tv/';
 const aryNews = 'https://arynews.tv/en/';
 const geoNews = 'https://www.geo.tv/';
 const dawnNews = 'https://www.dawn.com/';
 const dailyPakistan = 'https://en.dailypakistan.com.pk/category/pakistan/';
+const expressTribune = 'https://tribune.com.pk/';
 const apiRoutes = require('./api/routes');
 const mongoose = require('mongoose');
 const moment = require('moment');
@@ -19,7 +21,7 @@ let lastUpdated = 0;
 let start = moment(lastUpdated, 'HH:mm');
 const app = express();
 
-mongoose.connect('mongoose connection string here', { useNewUrlParser: true }, () => {
+mongoose.connect('add mongoose string here', { useNewUrlParser: true }, () => {
   console.log('connected to mongoose db');
 });
 
@@ -51,6 +53,10 @@ function getData() {
         }).then(() => {
           FetchDailyPakistan(dailyPakistan).then(() => {
             console.log('daily pakistan refreshed');
+          }).then(() => {
+            FetchExpressTribune(expressTribune).then(() => {
+              console.log('express tribune refreshed');
+            })
           })
         })
       })
@@ -61,7 +67,6 @@ function getData() {
 setInterval(() => {
   lastUpdated = getTime();
   start = moment(lastUpdated, 'HH:mm');
-  console.log(lastUpdated);
   getData();
 }, 1200000);
 

@@ -42,4 +42,12 @@ router.get('/geonews', (req, res) => {
   })
 })
 
+// express tribune route
+router.get('/expresstribune', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  topStorySave.findOne({_id: 'expresstribune'}).then((data) => {
+    res.json(data.Data);
+  })
+})
+
 module.exports = router;

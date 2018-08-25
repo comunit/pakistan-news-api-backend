@@ -27,7 +27,6 @@ let FetchGeoNews = async function (url) {
       const img = $(el).find('a').text();
       const findImages = cheerio.load(img);
       const findImages2 = findImages('body').children().attr('src').replace(/s_/g, '');
-      console.log(findImages2);
       let topStories = {
         title: title,
         link: link,
