@@ -22,7 +22,7 @@ let lastUpdated = 0;
 let start = moment(lastUpdated, 'HH:mm');
 const app = express();
 
-mongoose.connect('mongodb://comunit:imran123@ds115493.mlab.com:15493/pakistan-news-api', { useNewUrlParser: true }, () => {
+mongoose.connect('<mongoose string>', { useNewUrlParser: true }, () => {
   console.log('connected to mongoose db');
 });
 
