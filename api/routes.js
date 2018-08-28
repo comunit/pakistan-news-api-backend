@@ -1,5 +1,6 @@
 const express = require('express');
 const topStorySave = require('../models/news-model');
+const timeSave = require('../models/time-model');
 const router = express.Router();
 
 // ary news route
@@ -47,6 +48,14 @@ router.get('/expresstribune', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   topStorySave.findOne({_id: 'expresstribune'}).then((data) => {
     res.json(data.Data);
+  })
+})
+
+// time toute
+router.get('/time', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  timeSave.findOne({_id: 'time'}).then((data) => {
+    res.json(data.time);
   })
 })
 

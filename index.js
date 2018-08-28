@@ -15,13 +15,14 @@ const dawnNews = 'https://www.dawn.com/';
 const dailyPakistan = 'https://en.dailypakistan.com.pk/category/pakistan/';
 const expressTribune = 'https://tribune.com.pk/';
 const apiRoutes = require('./api/routes');
+const timeSave = require('./models/time-model');
 const mongoose = require('mongoose');
 const moment = require('moment');
 let lastUpdated = 0;
 let start = moment(lastUpdated, 'HH:mm');
 const app = express();
 
-mongoose.connect('add mongoose string here', { useNewUrlParser: true }, () => {
+mongoose.connect('mongodb://comunit:imran123@ds115493.mlab.com:15493/pakistan-news-api', { useNewUrlParser: true }, () => {
   console.log('connected to mongoose db');
 });
 
@@ -68,6 +69,17 @@ setInterval(() => {
   lastUpdated = getTime();
   start = moment(lastUpdated, 'HH:mm');
   getData();
+  // update time in database
+  timeSave.findById({
+    _id: 'time'
+  }).remove(() => {}).then(() => {
+    new timeSave({
+      _id: 'time',
+      time: start
+    }).save().then(() => {
+      console.log('time saved');
+    })
+  })
 }, 1200000);
 
 const getTime = () => {
