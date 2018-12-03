@@ -1,56 +1,53 @@
 const request = require("request");
 const cheerio = require("cheerio");
 const topStorySave = require("./models/news-model");
+let key = 0;
 let data = [];
 
 let FetchGeoNews = async function(url) {
   return await getData(url).then(res => {
     const $ = cheerio.load(res);
-    const topStory = $("div.slider-title-area")
-      .find("h1")
-      .text();
-    const topStoryLink = $("div.slider-area.border-box")
-      .find("a")
-      .attr("href");
-    const topStoryImg = $(".slider-area a").text();
-    const findImage = cheerio.load(topStoryImg);
-    const topStoryImg2 = findImage("body")
-      .children()
-      .attr("src");
-    //push top story to data
-    GeoNews = {
-      title: topStory,
-      link: topStoryLink,
-      image: topStoryImg2,
-      topstory: true
-    };
-
-    data.push(GeoNews);
-
-    $(".featured_bottom_section")
+    const topStory = $("div.m_c_left")
       .find("li")
       .each(function(i, el) {
         const title = $(el)
-          .find("h2")
+          .find(".heading")
+          .find("a")
           .text()
-          .replace(/\n/g, "");
+          .replace(/'/g, "");
+
         const link = $(el)
-          .find("a")
-          .attr("href");
-        const img = $(el)
-          .find("a")
-          .text();
-        const findImages = cheerio.load(img);
-        const findImages2 = findImages("body")
+          .find(".heading")
           .children()
-          .attr("src")
-          .replace(/s_/g, "");
-        let topStories = {
-          title: title,
-          link: link,
-          image: findImages2
-        };
-        data.push(topStories);
+          .attr("href");
+
+        const img = $(el)
+          .find(".m_pic")
+          .find("a")
+          .find(".video-icon")
+          .next()
+          .attr("data-cfsrc");
+
+        if (img !== undefined) {
+          var bigImg = img.replace(/s_/g, "");
+        }
+
+        if (key == 0) {
+          GeoNews = {
+            title: title,
+            link: link,
+            image: bigImg,
+            topstory: true
+          };
+        } else {
+          GeoNews = {
+            title: title,
+            link: link,
+            image: bigImg
+          };
+        }
+        key++;
+        data.push(GeoNews);
       });
 
     topStorySave
