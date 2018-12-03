@@ -1,11 +1,11 @@
 const request = require("request");
 const cheerio = require("cheerio");
 const topStorySave = require("./models/news-model");
-let key = 0;
 let data = [];
 
 let FetchGeoNews = async function(url) {
   return await getData(url).then(res => {
+    let key = 0;
     const $ = cheerio.load(res);
     const topStory = $("div.m_c_left")
       .find("li")
@@ -82,3 +82,4 @@ function getData(url) {
 }
 
 module.exports = FetchGeoNews;
+
