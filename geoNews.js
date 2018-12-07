@@ -21,12 +21,20 @@ let FetchGeoNews = async function(url) {
           .children()
           .attr("href");
 
-        const img = $(el)
+        let img = $(el)
           .find(".m_pic")
           .find("a")
           .find(".video-icon")
           .next()
-          .attr("data-cfsrc");
+          .attr("data-src");
+
+        if (img == undefined) {
+          img = $(el)
+            .find(".m_pic")
+            .find("a")
+            .find("img")
+            .attr("data-src");
+        }
 
         if (img !== undefined) {
           var bigImg = img.replace(/s_/g, "");
@@ -82,4 +90,3 @@ function getData(url) {
 }
 
 module.exports = FetchGeoNews;
-
