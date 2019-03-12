@@ -6,9 +6,9 @@ let data = [];
 let FetchAryNews = async function (url) {
   return await getData(url).then((res) => {
     const $ = cheerio.load(res);
-    const topStory = $('.bs-vc-wrapper a').attr('title');
-    const topStoryLink = $('.bs-vc-wrapper a').attr('href');
-    const topStoryImg = $('.bs-vc-wrapper a').attr('data-src');
+    const topStory = $('.featured.clearfix').find('a').attr('title');
+    const topStoryLink = $('.featured.clearfix').find('a').attr('href');
+    const topStoryImg = $('.featured.clearfix').find('a').attr('data-src');
     AryNews = {
       title: topStory,
       link: topStoryLink,
